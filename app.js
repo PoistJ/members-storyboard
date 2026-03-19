@@ -28,6 +28,9 @@ app.use(
 
 app.get("/", (req, res) => res.render("home"));
 
+app.get("/sign-up", (req, res) => res.render("sign-up"));
+
+
 app.listen(3000, (error) => {
   if (error) {
     throw error;
