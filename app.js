@@ -4,17 +4,17 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 const { name } = require("ejs");
 
 require("dotenv").config();
 
 const pool = new Pool({
-  host: process.env.HOST,
-  user: process.env.USER,
-  password: process.env.PASS,
-  port: process.env.PORT,
-  database: process.env.DB,
+  host: "localhost",
+  user: "poistj",
+  password: "0Omgiwasbaned",
+  port: 5432,
+  database: "storyboard",
 });
 
 const app = express();
@@ -35,21 +35,49 @@ app.use(
   }),
 );
 
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM members WHERE username = $1",
+        [username],
+      );
+      const user = rows[0];
+      const match = await bcrypt.compare(password, user.password);
+
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+
+      if (!match) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  }),
+);
+
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/sign-up", (req, res) => res.render("sign-up"));
 app.post("/sign-up", async (req, res, next) => {
   try {
+    const hashedPass = await bcrypt.hash(req.body.password, 10);
     await pool.query(
       "INSERT INTO members (first_name, last_name, username, password, status) VALUES ($1, $2, $3, $4, $5)",
       [
-        req.body.first - name,
-        req.body.last - name,
+        req.body.firstName,
+        req.body.lastName,
         req.body.username,
-        req.body.password,
+        hashedPass,
         "anon",
       ],
     );
+
+    res.redirect("/");
   } catch (err) {
     return next(err);
   }
