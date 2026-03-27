@@ -16,20 +16,56 @@ const validateUser = [
   body("firstName")
     .trim()
     .notEmpty()
-    .withMessage("Must not be empty")
+    .withMessage("First name cannot be empty")
     .isAlpha()
+    .withMessage("First name cannot contain numbers or symbols")
     .isLength({ min: 2, max: 30 })
     .withMessage("Must be at least 2 or less than 30 characters"),
+  body("lastName")
+    .trim()
+    .notEmpty()
+    .withMessage("Last name cannot be empty")
+    .isAlpha()
+    .withMessage("Last name cannot contain numbers or symbols")
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Must be at least 2 or less than 30 characters"),
+  body("username")
+    .trim()
+    .notEmpty()
+    .isEmail()
+    .withMessage("Please enter a valid email address"),
+  body("password")
+    .trim()
+    .notEmpty()
+    .isLength({ min: 10 })
+    .withMessage("Please type in a password that is at least 10 characters"),
 ];
 
 exports.indexGet = (req, res) => res.render("home");
 
-exports.createUserGet = (req, res) => res.render("sign-up");
+exports.createUserGet = (req, res) =>
+  res.render("sign-up", {
+    values: {
+    },
+  });
 
 exports.createUserPost = [
   validateUser,
   async (req, res, next) => {
     try {
+      const validationErr = validationResult(req);
+
+      if (!validationErr.isEmpty()) {
+        return res.status(400).render("sign-up", {
+          values: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.username,
+          },
+          errors: validationErr.array(),
+        });
+      }
+
       const hashedPass = await bcrypt.hash(req.body.password, 10);
       await pool.query(
         "INSERT INTO members (first_name, last_name, username, password, status) VALUES ($1, $2, $3, $4, $5)",
