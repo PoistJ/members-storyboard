@@ -52,6 +52,8 @@ app.get("/", indexController.indexGet);
 
 app.get("/sign-up", indexController.createUserGet);
 app.post("/sign-up", indexController.createUserPost);
+app.get("/join-the-club", indexController.joinClubGet);
+app.post("/join-the-club", indexController.joinClubPost);
 
 app.listen(3000, (error) => {
   if (error) {

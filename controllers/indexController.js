@@ -88,3 +88,15 @@ exports.createUserPost = [
     }
   },
 ];
+
+exports.joinClubGet = (req, res) => {
+  res.render("join-club");
+};
+
+exports.joinClubPost = (req, res) => {
+  if (req.body.secret === "theOmega") {
+    res.render("club-welcome");
+  } else {
+    res.render("join-club");
+  }
+};
