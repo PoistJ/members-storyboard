@@ -39,14 +39,18 @@ const validateUser = [
     .notEmpty()
     .isLength({ min: 10 })
     .withMessage("Please type in a password that is at least 10 characters"),
+  body("passwordConfirm")
+    .custom((value, { req }) => {
+      return value === req.body.password;
+    })
+    .withMessage("Password must match"),
 ];
 
 exports.indexGet = (req, res) => res.render("home");
 
 exports.createUserGet = (req, res) =>
   res.render("sign-up", {
-    values: {
-    },
+    values: {},
   });
 
 exports.createUserPost = [
