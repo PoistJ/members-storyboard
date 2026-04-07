@@ -7,7 +7,15 @@
   </head>
   <body>
     <h1>The Storyboard</h1>
-    <a href="/sign-up">Sign-up here!</a>
-    <a href="/join-the-club">Join the club!</a>
+    <% if (locals.user) {%>
+        <h2>Welcome back <%= user.username %></h2>
+        <% if (locals.user.status === "anon") { %>
+            <a href="/join-the-club">Join the club!</a>
+        <% } %>
+        <a href="/log-out">Log out</a>
+    <% } else { %>
+        <a href="/login">Log in</a>
+        <a href="/sign-up">Sign-up here!</a>
+    <% } %>
   </body>
 </html>

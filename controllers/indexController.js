@@ -46,7 +46,7 @@ const validateUser = [
     .withMessage("Password must match"),
 ];
 
-exports.indexGet = (req, res) => res.render("home");
+exports.indexGet = (req, res) => res.render("home", { user: req.user });
 
 exports.createUserGet = (req, res) =>
   res.render("sign-up", {
@@ -101,5 +101,59 @@ exports.joinClubPost = async (req, res) => {
     res.redirect("/");
   } else {
     res.render("join-club");
+  }
+};
+
+exports.loginGet = (req, res) => {
+  res.render("login");
+};
+
+exports.logoutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
+exports.authenticateGet = (req, res) => {
+  res.render("authenticated");
+};
+
+exports.strategy = async (username, password, done) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM members WHERE username = $1",
+      [username],
+    );
+    const user = rows[0];
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!user) {
+      return done(null, false, { message: "Incorrect username" });
+    }
+
+    if (!match) {
+      return done(null, false, { message: "Incorrect password" });
+    }
+
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+};
+
+exports.deserialize = async (username, done) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username],
+    );
+    const user = rows[0];
+
+    done(null, user);
+  } catch (err) {
+    done(err);
   }
 };

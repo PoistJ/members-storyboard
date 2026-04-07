@@ -1,5 +1,6 @@
 const path = require("node:path");
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -23,37 +24,29 @@ app.use(
   }),
 );
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const { rows } = await pool.query(
-        "SELECT * FROM members WHERE username = $1",
-        [username],
-      );
-      const user = rows[0];
-      const match = await bcrypt.compare(password, user.password);
+passport.use(new LocalStrategy(indexController.strategy));
 
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
+passport.serializeUser((user, done) => {
+  done(null, user.username);
+});
 
-      if (!match) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
-  }),
-);
+passport.deserializeUser(indexController.deserialize);
 
 app.get("/", indexController.indexGet);
-
 app.get("/sign-up", indexController.createUserGet);
 app.post("/sign-up", indexController.createUserPost);
 app.get("/join-the-club", indexController.joinClubGet);
 app.post("/join-the-club", indexController.joinClubPost);
+app.get("/login", indexController.loginGet);
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/authenticated",
+    failureRedirect: "/login",
+  }),
+);
+app.get("/log-out", indexController.logoutGet);
+app.get("/authenticated", indexController.authenticateGet);
 
 app.listen(3000, (error) => {
   if (error) {
