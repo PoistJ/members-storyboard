@@ -98,9 +98,10 @@ exports.joinClubGet = (req, res) => {
 
 exports.joinClubPost = async (req, res) => {
   if (req.body.secret === "theOmega") {
-    await pool.query("UPDATE members SET status = 'member' WHERE username = $1", [
-      req.user.username,
-    ]);
+    await pool.query(
+      "UPDATE members SET status = 'member' WHERE username = $1",
+      [req.user.username],
+    );
     res.redirect("/");
   } else {
     res.render("join-club");
@@ -158,5 +159,22 @@ exports.deserialize = async (username, done) => {
     done(null, user);
   } catch (err) {
     done(err);
+  }
+};
+
+exports.createGet = (req, res) => {
+  res.render("create");
+};
+
+exports.createPost = async (req, res, next) => {
+  try {
+    const now = new Date();
+    const { rows } = await pool.query(
+      "INSERT INTO messages (message, title, timestamp, username) VALUES ($1, $2, $3, $4)",
+      [req.body.message, req.body.title, now, req.user.username],
+    );
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
   }
 };

@@ -47,6 +47,8 @@ app.post(
 );
 app.get("/log-out", indexController.logoutGet);
 app.get("/authenticated", indexController.authenticateGet);
+app.get("/create", indexController.createGet);
+app.post("/create", indexController.createPost);
 
 app.listen(3000, (error) => {
   if (error) {
