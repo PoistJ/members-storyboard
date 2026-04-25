@@ -46,7 +46,10 @@ const validateUser = [
     .withMessage("Password must match"),
 ];
 
-exports.indexGet = (req, res) => res.render("home", { user: req.user });
+exports.indexGet = (req, res) => {
+  console.log(req.user);
+  res.render("home", { user: req.user });
+};
 
 exports.createUserGet = (req, res) =>
   res.render("sign-up", {
@@ -95,8 +98,8 @@ exports.joinClubGet = (req, res) => {
 
 exports.joinClubPost = async (req, res) => {
   if (req.body.secret === "theOmega") {
-    await pool.query("UPDATE members SET status WHERE username = $1", [
-      username,
+    await pool.query("UPDATE members SET status = 'member' WHERE username = $1", [
+      req.user.username,
     ]);
     res.redirect("/");
   } else {
@@ -147,7 +150,7 @@ exports.strategy = async (username, password, done) => {
 exports.deserialize = async (username, done) => {
   try {
     const { rows } = await pool.query(
-      "SELECT * FROM users WHERE username = $1",
+      "SELECT * FROM members WHERE username = $1",
       [username],
     );
     const user = rows[0];

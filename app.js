@@ -23,7 +23,7 @@ app.use(
     },
   }),
 );
-
+app.use(passport.session());
 passport.use(new LocalStrategy(indexController.strategy));
 
 passport.serializeUser((user, done) => {
