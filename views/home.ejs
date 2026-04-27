@@ -18,5 +18,15 @@
         <a href="/login">Log in</a>
         <a href="/sign-up">Sign-up here!</a>
     <% } %>
+
+    <ul>
+      <% for (let i = 0; i < messages.length; i++) { %>
+          <div>
+            <h3><%= messages[i].title %></h3>
+            <p><%= messages[i].timestamp %></p>
+            <p><%= messages[i].message %></p>
+          </div>
+      <% } %>
+    </ul>
   </body>
 </html>

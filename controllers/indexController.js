@@ -46,9 +46,14 @@ const validateUser = [
     .withMessage("Password must match"),
 ];
 
-exports.indexGet = (req, res) => {
+exports.indexGet = async (req, res) => {
   console.log(req.user);
-  res.render("home", { user: req.user });
+
+  const { rows } = await pool.query("SELECT * FROM messages");
+
+  console.log(rows);
+
+  res.render("home", { user: req.user, messages: rows });
 };
 
 exports.createUserGet = (req, res) =>
