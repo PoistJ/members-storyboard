@@ -175,8 +175,8 @@ exports.createPost = async (req, res, next) => {
   try {
     const now = new Date();
     const { rows } = await pool.query(
-      "INSERT INTO messages (message, title, timestamp, username) VALUES ($1, $2, $3, $4)",
-      [req.body.message, req.body.title, now, req.user.username],
+      "INSERT INTO messages (message, title, timestamp, username, first_name) VALUES ($1, $2, $3, $4, $5)",
+      [req.body.message, req.body.title, now, req.user.username, req.user.first_name],
     );
     res.redirect("/");
   } catch (err) {
