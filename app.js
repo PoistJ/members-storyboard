@@ -49,6 +49,9 @@ app.get("/log-out", indexController.logoutGet);
 app.get("/authenticated", indexController.authenticateGet);
 app.get("/create", indexController.createGet);
 app.post("/create", indexController.createPost);
+app.get("/verify-admin", indexController.updateAdminGet);
+app.post("/verify-admin", indexController.updateAdminPost);
+app.post("/delete", indexController.deletePost);
 
 app.listen(3000, (error) => {
   if (error) {

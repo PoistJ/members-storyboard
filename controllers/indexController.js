@@ -47,12 +47,7 @@ const validateUser = [
 ];
 
 exports.indexGet = async (req, res) => {
-  console.log(req.user);
-
   const { rows } = await pool.query("SELECT * FROM messages");
-
-  console.log(rows);
-
   res.render("home", { user: req.user, messages: rows });
 };
 
@@ -176,8 +171,45 @@ exports.createPost = async (req, res, next) => {
     const now = new Date();
     const { rows } = await pool.query(
       "INSERT INTO messages (message, title, timestamp, username, first_name) VALUES ($1, $2, $3, $4, $5)",
-      [req.body.message, req.body.title, now, req.user.username, req.user.first_name],
+      [
+        req.body.message,
+        req.body.title,
+        now,
+        req.user.username,
+        req.user.first_name,
+      ],
     );
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
+};
+exports.updateAdminGet = (req, res) => {
+  res.render("verify-admin");
+};
+
+exports.updateAdminPost = async (req, res, next) => {
+  if (req.body.adminPass === "omegaAdmin") {
+    try {
+      await pool.query(
+        "UPDATE members SET status = 'admin' WHERE username = $1",
+        [req.user.username],
+      );
+      res.redirect("/");
+    } catch (err) {
+      return next(err);
+    }
+  } else {
+    res.redirect("/verify-admin");
+  }
+};
+
+exports.deletePost = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    await pool.query("DELETE FROM messages WHERE message_id = $1", [
+      req.body.message_id,
+    ]);
     res.redirect("/");
   } catch (err) {
     return next(err);

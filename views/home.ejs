@@ -13,6 +13,10 @@
         <% if (locals.user.status === "anon") { %>
             <a href="/join-the-club">Join the club!</a>
         <% } %>
+        <% if (locals.user.status != "admin") { %>
+            <a href="/verify-admin">Are you an admin? Verify here</a>
+        <% } %>
+
         <a href="/log-out">Log out</a>
     <% } else { %>
         <a href="/login">Log in</a>
@@ -28,6 +32,14 @@
               <% if (locals.user.status === "member") { %>
                 <p>From <%= messages[i].first_name %></p>
                 <p><%= messages[i].timestamp %></p>
+              <% } %>
+
+              <% if (locals.user.status === "admin") { %>
+                  <form action="/delete" method="POST">
+                    <input type="text" id="message_id" name="message_id" value="<%= messages[i].message_id %>" readonly/>
+                    <input type="submit" value="Delete Post" />
+                  </form>
+
               <% } %>
             <% } %>  
           </div>
