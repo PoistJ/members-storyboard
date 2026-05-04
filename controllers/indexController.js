@@ -8,7 +8,7 @@ const pool = new Pool({
   host: process.env.HOST,
   user: process.env.USER,
   password: process.env.PASS,
-  port: 5432,
+  port: process.env.PORT,
   database: process.env.DB,
 });
 
@@ -84,8 +84,6 @@ exports.createUserPost = [
           "anon",
         ],
       );
-
-      res.redirect("/");
     } catch (err) {
       return next(err);
     }
@@ -191,8 +189,11 @@ exports.updateAdminGet = (req, res) => {
 exports.updateAdminPost = async (req, res, next) => {
   if (req.body.adminPass === "omegaAdmin") {
     try {
+      await pool.query("UPDATE members SET isadmin = '1' WHERE username = $1", [
+        req.user.username,
+      ]);
       await pool.query(
-        "UPDATE members SET status = 'admin' WHERE username = $1",
+        "UPDATE members SET status = 'member' WHERE username = $1",
         [req.user.username],
       );
       res.redirect("/");
