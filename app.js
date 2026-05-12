@@ -32,6 +32,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(indexController.deserialize);
 
+app.use(express.static(path.join(__dirname, "public")));
+
+
 app.get("/", indexController.indexGet);
 app.get("/sign-up", indexController.createUserGet);
 app.post("/sign-up", indexController.createUserPost);

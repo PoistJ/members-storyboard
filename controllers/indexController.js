@@ -47,7 +47,7 @@ const validateUser = [
 ];
 
 exports.indexGet = async (req, res) => {
-  const { rows } = await pool.query("SELECT * FROM messages");
+  const { rows } = await pool.query("SELECT * FROM messages ORDER BY timestamp DESC");
   res.render("home", { user: req.user, messages: rows });
 };
 

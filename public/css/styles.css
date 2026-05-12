@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter.ttf);
+}
+
+body {
+  padding: 0.2em 300px 0.2em 300px;
+  min-height: 100vh;
+  background-color: #edf6f9;
+  font-family: Inter, serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userButtonContainer {
+  align-content: center;
+}
+
+.btn {
+  border-style: solid;
+  text-decoration: none;
+  padding: 3px 10px 3px 10px;
+  background-color: blue;
+  border-radius: 10px;
+}
+
+.btn:visited {
+  color: white;
+}
+
+.profileDiv {
+  display: flex;
+  align-items: center;
+}
+
+.createMessage {
+  padding: 20px;
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+p > input {
+  border-radius: 10px;
+  border-color: #b3b6b7;
+}
+
+p > textarea {
+  resize: none;
+  width: 100%;
+  border-radius: 10px;
+  border-color: #b3b6b7;
+}
+
+.createMessage,
+.profileDiv,
+.messageDiv {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: white;
+}

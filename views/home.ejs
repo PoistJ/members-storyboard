@@ -4,28 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storyboard</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
   </head>
   <body>
-    <h1>The Storyboard</h1>
-    <% if (locals.user) {%>
-        <h2>Welcome back <%= user.first_name %></h2>
-        <a href="/create">Create new message</a>
+    <div class="header">
+      <h1>The Storyboard</h1>
+
+      <div class="userButtonContainer">
+        <% if (locals.user) { %>
+
         <% if (locals.user.status === "anon") { %>
-            <a href="/join-the-club">Join the club!</a>
+            <a class="btn" href="/join-the-club">Join the club!</a>
         <% } %>
         <% if (locals.user.isadmin != "true") { %>
-            <a href="/verify-admin">Are you an admin? Verify here</a>
+            <a class="btn" href="/verify-admin">Are you an admin? Verify here</a>
         <% } %>
 
-        <a href="/log-out">Log out</a>
-    <% } else { %>
-        <a href="/login">Log in</a>
-        <a href="/sign-up">Sign-up here!</a>
+        <a class="btn" href="/log-out">Log out</a>
+        <% } else { %>
+            <a class="btn" href="/login">Log in</a>
+            <a class="btn" href="/sign-up">Sign up</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="profileDiv">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="36"
+        height="36"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+        <path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" />
+      </svg>
+
+      <div class="userInfoDiv">
+      <% if (locals.user) { %>
+        <h2>Welcome back <%= user.first_name %>!</h2>
+        <% if (locals.user.status === "anon") { %>
+        <p>User Status: Anonymous</p>
+        <% } else if (locals.user.status === "member") { %>
+        <p>User Status: Member</p>
+        <% } %>
+      <% } else { %>
+        <h2>Anonymous</h2>
+        <p>User Status: Anonymous</p>
+      <% } %>
+      </div>    
+    </div>
+
+    <% if (locals.user) { %>
+      <div class="createMessage">
+        <form action="create" method="POST">
+          <p>          
+            <input name="title" id="title" placeholder="Title" type="text" />
+          </p>
+
+          <p>
+            <textarea
+              name="message"
+              id="message"
+              placeholder="Share your story!"
+              rows="7"
+            ></textarea>
+          </p>
+
+          <p>
+            <input type="submit" />
+          </p>
+        </form>
+      </div>
     <% } %>
 
     <ul>
       <% for (let i = 0; i < messages.length; i++) { %>
-          <div>
+          <div class="messageDiv">
             <h3><%= messages[i].title %></h3>
             <p><%= messages[i].message %></p>
             <% if (locals.user) { %>
