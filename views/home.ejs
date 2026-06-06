@@ -41,15 +41,15 @@
 
       <div class="userInfoDiv">
       <% if (locals.user) { %>
-        <h2>Welcome back <%= user.first_name %>!</h2>
+        <h2 class="welcomeDiv">Welcome back <%= user.first_name %>!</h2>
         <% if (locals.user.status === "anon") { %>
-        <p>User Status: Anonymous</p>
+        <p class="statusDiv">User Status: Anonymous</p>
         <% } else if (locals.user.status === "member") { %>
-        <p>User Status: Member</p>
+        <p class="statusDiv">User Status: Member</p>
         <% } %>
       <% } else { %>
-        <h2>Anonymous</h2>
-        <p>User Status: Anonymous</p>
+        <h2 class="welcomeDiv">Anonymous</h2>
+        <p class="statusDiv">User Status: Anonymous</p>
       <% } %>
       </div>    
     </div>
@@ -71,7 +71,7 @@
           </p>
 
           <p>
-            <input type="submit" />
+            <button class="submitBtn btn" type="submit">Post</button>
           </p>
         </form>
       </div>

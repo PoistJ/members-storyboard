@@ -3,11 +3,17 @@
   src: url(../fonts/Inter.ttf);
 }
 
+h2, h3 {
+  font-size: 16px;
+}
+
 body {
   padding: 0.2em 300px 0.2em 300px;
   min-height: 100vh;
   background-color: #edf6f9;
   font-family: Inter, serif;
+  color: #343a40;
+  font-size: 16px;
 }
 
 .header {
@@ -20,11 +26,13 @@ body {
 }
 
 .btn {
-  border-style: solid;
   text-decoration: none;
-  padding: 3px 10px 3px 10px;
-  background-color: blue;
-  border-radius: 10px;
+  padding: 10px 14px 10px 14px;
+  background-color: #669bbc;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  border-style: none;
 }
 
 .btn:visited {
@@ -34,6 +42,25 @@ body {
 .profileDiv {
   display: flex;
   align-items: center;
+  padding: 20px;
+}
+
+.userInfoDiv {
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcomeDiv, .statusDiv {
+  margin: 0px;
+}
+
+.welcomeDiv {
+  margin-bottom: 4px;
+}
+
+.classDiv {
+  align-self: flex-start;
 }
 
 .createMessage {
@@ -59,8 +86,14 @@ p > textarea {
 
 .createMessage,
 .profileDiv,
-.messageDiv {
+.messageDiv,
+.loginForm {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background-color: white;
+  margin: 10px 0px 30px 0px;
+}
+
+.messageDiv {
+  padding: 10px 20px 10px 20px;
 }
