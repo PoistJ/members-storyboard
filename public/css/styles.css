@@ -3,7 +3,8 @@
   src: url(../fonts/Inter.ttf);
 }
 
-h2, h3 {
+h2,
+h3 {
   font-size: 16px;
 }
 
@@ -51,7 +52,8 @@ body {
   flex-direction: column;
 }
 
-.welcomeDiv, .statusDiv {
+.welcomeDiv,
+.statusDiv {
   margin: 0px;
 }
 
@@ -72,22 +74,20 @@ ul {
   margin: 0px;
 }
 
-p > input {
-  border-radius: 10px;
-  border-color: #b3b6b7;
+.enterMessage {
+  display: flex;
+  flex-direction: column;
 }
 
 p > textarea {
   resize: none;
-  width: 100%;
-  border-radius: 10px;
-  border-color: #b3b6b7;
 }
 
 .createMessage,
 .profileDiv,
 .messageDiv,
-.loginForm {
+.loginForm,
+.signupForm {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background-color: white;
@@ -96,4 +96,59 @@ p > textarea {
 
 .messageDiv {
   padding: 10px 20px 10px 20px;
+}
+
+.sign-up-header,
+.log-in-header {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.sign-up-subheader {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up-subheader > a {
+  align-content: center;
+  padding-left: 6px;
+}
+
+.signupForm,
+.loginForm {
+  padding: 30px;
+}
+
+.signupForm > p,
+.loginForm > p {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  margin-bottom: 24px;
+}
+
+.signupForm > p > label,
+.loginForm > p > label {
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  border-color: #e9ecef;
+  border-width: 2px;
+  border-radius: 5px;
+  border-style: solid;
+  padding: 10px;
+}
+
+.signupForm > .btn,
+.loginForm > .btn {
+  width: 100%;
+}
+
+.btn {
+  transition: background-color 0.2s ease-out;
+}
+
+.btn:hover {
+  background-color: #004e98;
 }

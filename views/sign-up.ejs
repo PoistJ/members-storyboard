@@ -7,42 +7,61 @@
     <link rel="stylesheet" type="text/css" href="../css/styles.css" />
   </head>
   <body>
-    <h1>Sign-up here!</h1>
+    <h1 class="sign-up-header">Create an account</h1>
+    <div class="sign-up-subheader">
+      <p>Already have an account?</p>
+      <a href="/login">Sign in</a>
+    </div>
+
     <%- include("partials/errors.ejs") %>
-    <form action="/sign-up" method="POST">
-      <label for="firstName">First Name: </label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        placeholder="First Name"
-        value="<%= values.firstName %>""
-      />
-      <label for="lastName">Last Name: </label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        placeholder="Last Name"
-        value="<%= values.lastName %>""
-      />
-      <label for="username">Username (email): </label>
-      <input id="username" name="username" type="email" placeholder="Email" value="<%= values.username %>"" />
-      <label for="password">Password: </label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Password"
-      />
-      <label for="passwordConfirm">Confirm Password:</label>
-      <input 
-        id="passwordConfirm"
-        name="passwordConfirm"
-        type="password"
-        placeholder="Retype Password"
-      />
-      <button type="submit">Sign Up</button>
+    <form class="signupForm" action="/sign-up" method="POST">
+      <p>
+        <label for="firstName">First Name </label>
+        <input
+          id="firstName"
+          name="firstName"
+          type="text"
+          placeholder="First Name"
+          value="<%= values.firstName %>""
+        />
+      </p>
+
+      <p>
+        <label for="lastName">Last Name </label>
+        <input
+          id="lastName"
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+          value="<%= values.lastName %>""
+        />
+      </p>
+
+      <p>
+        <label for="username">Email </label>
+        <input id="username" name="username" type="email" placeholder="Email" value="<%= values.username %>"" />
+      </p>
+
+      <p>
+        <label for="password">Password </label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+      </p>
+
+      <p>
+        <label for="passwordConfirm">Confirm Password</label>
+        <input 
+          id="passwordConfirm"
+          name="passwordConfirm"
+          type="password"
+          placeholder="Re-enter your password"
+        />
+      </p>
+      <button class="btn" type="submit">Create Account</button>
     </form>
   </body>
 </html>
