@@ -47,7 +47,9 @@ const validateUser = [
 ];
 
 exports.indexGet = async (req, res) => {
-  const { rows } = await pool.query("SELECT * FROM messages ORDER BY timestamp DESC");
+  const { rows } = await pool.query(
+    "SELECT * FROM messages ORDER BY timestamp DESC",
+  );
   res.render("home", { user: req.user, messages: rows });
 };
 
@@ -84,6 +86,8 @@ exports.createUserPost = [
           "anon",
         ],
       );
+
+      res.redirect("/");
     } catch (err) {
       return next(err);
     }
