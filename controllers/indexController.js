@@ -5,11 +5,11 @@ const { Pool } = require("pg");
 require("dotenv").config();
 
 const pool = new Pool({
-  host: PGHOST,
-  user: PGPUSER,
-  password: PGPASSWORD,
-  port: PGPORT,
-  database: PGDATABASE,
+  host: process.env.PGHOST,
+  user: process.env.PGPUSER,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+  database: process.env.PGDATABASE,
 });
 
 const validateUser = [
